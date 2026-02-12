@@ -21,78 +21,6 @@ interface Survey {
   isActive: boolean;
   createdAt: string;
 }
-// const surveys: Survey[] = [
-//   {
-//     _id: "surv_001",
-//     name: "نظرسنجی رضایت مشتریان",
-//     endDate: new Date("2024-12-30T23:59:59.999Z"),
-//     isActive: true,
-//     createdAt: "2024-01-15T10:30:00.000Z",
-//   },
-//   {
-//     _id: "surv_002",
-//     name: "ارزیابی عملکرد کارکنان",
-//     endDate: new Date("2024-11-15T23:59:59.999Z"),
-//     isActive: false,
-//     createdAt: "2024-02-20T14:45:00.000Z",
-//   },
-//   {
-//     _id: "surv_003",
-//     name: "نظرسنجی کیفیت محصولات",
-//     endDate: new Date("2024-10-20T23:59:59.999Z"),
-//     isActive: true,
-//     createdAt: "2024-03-10T09:15:00.000Z",
-//   },
-//   {
-//     _id: "surv_004",
-//     name: "بررسی نیازهای آموزشی",
-//     endDate: new Date("2024-09-05T23:59:59.999Z"),
-//     isActive: false,
-//     createdAt: "2024-01-05T11:20:00.000Z",
-//   },
-//   {
-//     _id: "surv_005",
-//     name: "نظرسنجی تجربه کاربری وبسایت",
-//     endDate: new Date("2024-12-15T23:59:59.999Z"),
-//     isActive: true,
-//     createdAt: "2024-04-18T16:00:00.000Z",
-//   },
-//   {
-//     _id: "surv_006",
-//     name: "ارزیابی رویداد سالانه",
-//     endDate: new Date("2024-08-30T23:59:59.999Z"),
-//     isActive: false,
-//     createdAt: "2024-02-28T13:10:00.000Z",
-//   },
-//   {
-//     _id: "surv_007",
-//     name: "نظرسنجی برنامه‌های وفاداری",
-//     endDate: new Date("2024-11-30T23:59:59.999Z"),
-//     isActive: true,
-//     createdAt: "2024-03-22T10:45:00.000Z",
-//   },
-//   {
-//     _id: "surv_008",
-//     name: "بررسی رضایت بیماران",
-//     endDate: new Date("2024-10-10T23:59:59.999Z"),
-//     isActive: true,
-//     createdAt: "2024-01-30T08:30:00.000Z",
-//   },
-//   {
-//     _id: "surv_009",
-//     name: "نظرسنجی بازخورد محصول جدید",
-//     endDate: new Date("2024-09-25T23:59:59.999Z"),
-//     isActive: false,
-//     createdAt: "2024-04-05T12:15:00.000Z",
-//   },
-//   {
-//     _id: "surv_010",
-//     name: "ارزیابی سمینار تخصصی",
-//     endDate: new Date("2024-12-05T23:59:59.999Z"),
-//     isActive: true,
-//     createdAt: "2024-03-15T14:20:00.000Z",
-//   },
-// ];
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -134,6 +62,7 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       alert("خطا در حذف نظرسنجی");
+      console.log(error);
     }
   };
 

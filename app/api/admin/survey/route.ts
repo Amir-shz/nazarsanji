@@ -4,7 +4,7 @@ import Survey from "@/models/Survey";
 import { verifySession } from "@/lib/session";
 
 // GET all surveys (admin)
-export async function GET(request: NextRequest) {
+export async function GET() {
   const auth = await verifySession();
   if (!auth.isAuth) return;
 
@@ -35,13 +35,6 @@ export async function POST(request: NextRequest) {
     console.log(description);
     console.log(endDate);
     console.log(questions);
-
-    // if (!name || !endDate) {
-    //   return NextResponse.json(
-    //     { error: "نام و تاریخ پایان الزامی‌اند" },
-    //     { status: 400 }
-    //   );
-    // }
 
     const survey = await Survey.create({
       name,

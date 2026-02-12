@@ -7,9 +7,9 @@ export default function EditSurveyPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const resolveParams = async () => {
-    return await params;
-  };
+  // const resolveParams = async () => {
+  //   return await params;
+  // };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
@@ -28,14 +28,10 @@ export default function EditSurveyPage({
   );
 }
 
-function EditSurveyContent({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const resolveParams = async () => {
-    return await params;
-  };
+function EditSurveyContent({ params }: { params: Promise<{ id: string }> }) {
+  // const resolveParams = async () => {
+  //   return await params;
+  // };
 
   return (
     <div className="space-y-4">

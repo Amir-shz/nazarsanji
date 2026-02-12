@@ -23,7 +23,7 @@ export default function PersonalInfoForm() {
 
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     setLoading(true);
 
@@ -114,12 +114,6 @@ export default function PersonalInfoForm() {
             </SelectContent>
           </Select>
         </div>
-
-        {/* {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-            {error}
-          </div>
-        )} */}
 
         <Button
           type="submit"

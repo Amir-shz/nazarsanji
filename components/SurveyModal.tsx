@@ -25,8 +25,7 @@ interface IQuestion {
   descriptiveQuestion?: string;
 }
 
-export default function SurveyModal({ survey }) {
-  // const [survey.questions, setsurvey.questions] = useState();
+export default function SurveyModal({ survey }: { survey: any }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [userInfo, setUserInfo] = useState<any>(null);

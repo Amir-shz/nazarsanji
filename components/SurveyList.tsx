@@ -46,7 +46,7 @@ export default function SurvayList() {
     fetch("/api/survey")
       .then((res) => res.json())
       .then((surveys) => {
-        setData(surveys.filter((survey) => survey.isActive));
+        setData(surveys.filter((survey: any) => survey.isActive));
         setLoading(false);
       })
       .catch(() => setLoading(false));
