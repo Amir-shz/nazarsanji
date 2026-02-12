@@ -30,6 +30,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log(surveyId);
+    console.log(answers);
+    console.log(userNationalCode);
+    console.log(userFullName);
+    console.log(userServiceLocation);
+
     // Check if survey exists and is not expired
     const survey = await Survey.findById(surveyId);
     if (!survey) {

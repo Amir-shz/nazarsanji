@@ -6,7 +6,7 @@ export async function GET() {
   try {
     await dbConnect();
 
-    const surveys = await Survey.find({ isActive: true }).sort({
+    const surveys = await Survey.find().sort({
       createdAt: -1,
     });
 

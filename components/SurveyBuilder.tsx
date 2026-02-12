@@ -257,6 +257,7 @@ export default function SurveyBuilder({
               setSelectedDay(val);
               setFormData((prev) => ({
                 ...prev,
+                // @ts-expect-error its needed
                 endDate: new Date(val),
               }));
             }}

@@ -14,6 +14,7 @@ import {
 interface Question {
   _id: string;
   question: string;
+  descriptiveQuestion: string;
 }
 
 interface Survey {
@@ -36,7 +37,9 @@ interface UserInfo {
 
 interface Response {
   _id: string;
-  userId: UserInfo;
+  userFullName: string;
+  userNationalCode: string;
+  userServiceLocation: string;
   answers: Answer[];
   createdAt: string;
 }
