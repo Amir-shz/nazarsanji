@@ -14,9 +14,9 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { QUESTION_TYPES } from "@/lib/config";
 import { digitsEnToFa } from "@persian-tools/persian-tools";
-import DatePicker, { DateObject } from "react-multi-date-picker";
-import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
+import { DayPicker } from "react-day-picker/persian";
+import "react-day-picker/style.css";
+import { toPersianDate } from "@/lib/utils";
 
 interface Question {
   _id?: string;
@@ -37,7 +37,7 @@ export default function SurveyBuilder({
   const [loading, setLoading] = useState(isEdit);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const [selectedDay, setSelectedDay] = useState<DateObject | null>(null);
+  const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -248,22 +248,23 @@ export default function SurveyBuilder({
 
         <div className="[&>div]:w-full [&>div]:min-h-9">
           <label className="block text-sm font-medium mb-1">تاریخ پایان</label>
-          <DatePicker
-            style={{ width: "100%", minHeight: "36px", cursor: "pointer" }}
-            value={selectedDay}
-            onChange={(val) => {
+          <DayPicker
+            animate
+            mode="single"
+            // locale={faIR}
+            selected={selectedDay}
+            onSelect={(val) => {
               setSelectedDay(val);
-              if (val) {
-                const date = new Date(val.year, val.month.number - 1, val.day);
-                setFormData((prev) => ({
-                  ...prev,
-                  endDate: date,
-                }));
-              }
+              setFormData((prev) => ({
+                ...prev,
+                endDate: new Date(val),
+              }));
             }}
-            calendar={persian}
-            locale={persian_fa}
-            calendarPosition="bottom-right"
+            footer={
+              selectedDay
+                ? `انتخاب شده: ${toPersianDate(new Date(selectedDay))}`
+                : "انتخاب کنید"
+            }
           />
         </div>
       </div>
