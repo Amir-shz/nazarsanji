@@ -14,6 +14,9 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { QUESTION_TYPES } from "@/lib/config";
 import { digitsEnToFa } from "@persian-tools/persian-tools";
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
 
 interface Question {
   _id?: string;
@@ -34,10 +37,11 @@ export default function SurveyBuilder({
   const [loading, setLoading] = useState(isEdit);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [selectedDay, setSelectedDay] = useState<DateObject | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    endDate: new Date("2020-12-30"),
+    endDate: new Date(),
   });
   const [questions, setQuestions] = useState<Question[]>([
     {
@@ -64,6 +68,7 @@ export default function SurveyBuilder({
         description: survey.description,
         endDate: survey.endDate,
       });
+      setSelectedDay(survey.endDate);
       setQuestions(survey.questions || []);
     } catch (error) {
       setError("خطا در بارگذاری نظرسنجی");
@@ -241,18 +246,25 @@ export default function SurveyBuilder({
           />
         </div>
 
-        <div>
+        <div className="[&>div]:w-full [&>div]:min-h-9">
           <label className="block text-sm font-medium mb-1">تاریخ پایان</label>
-          {/* <DatePicker /> */}
-          {/* <Input
-            type="text"
-            name="endDate"
-            value={formData.endDate}
-            onChange={handleInputChange}
-            placeholder="yyyy/mm/dd"
-            required
-            className="text-right ltr"
-          /> */}
+          <DatePicker
+            style={{ width: "100%", minHeight: "36px", cursor: "pointer" }}
+            value={selectedDay}
+            onChange={(val) => {
+              setSelectedDay(val);
+              if (val) {
+                const date = new Date(val.year, val.month.number - 1, val.day);
+                setFormData((prev) => ({
+                  ...prev,
+                  endDate: date,
+                }));
+              }
+            }}
+            calendar={persian}
+            locale={persian_fa}
+            calendarPosition="bottom-right"
+          />
         </div>
       </div>
 
