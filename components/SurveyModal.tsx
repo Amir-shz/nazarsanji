@@ -28,7 +28,9 @@ interface IQuestion {
 export default function SurveyModal({ survey }: { survey: any }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const [userInfo, setUserInfo] = useState<any>(null);
+  const [userInfo, setUserInfo] = useState<any>(
+    JSON.parse(String(localStorage.getItem("userInfo")))
+  );
   const [open, setOpen] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<any[]>(
@@ -72,7 +74,7 @@ export default function SurveyModal({ survey }: { survey: any }) {
     if (currentQuestion < survey.questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
-      console.log("پاسخ‌های نهایی:", answers);
+      // console.log("پاسخ‌های نهایی:", answers);
       // ثبت پاسخ ها
 
       await submit();
@@ -98,23 +100,24 @@ export default function SurveyModal({ survey }: { survey: any }) {
   const submit = async () => {
     setLoading(true);
 
-    const storedUserInfo = localStorage.getItem("userInfo");
-    if (!storedUserInfo) {
+    // const storedUserInfo = localStorage.getItem("userInfo");
+    if (!userInfo) {
       router.push("/");
       return;
-    } else {
-      setUserInfo(JSON.parse(storedUserInfo));
     }
+    // else {
+    //   setUserInfo(JSON.parse(storedUserInfo));
+    // }
 
     try {
       const response = await fetch("/api/answer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          surveyId: survey._id,
-          userNationalCode: userInfo.nationalCode,
-          userFullName: `${userInfo.firstName} ${userInfo.lastName}`,
-          userServiceLocation: userInfo.serviceLocation,
+          surveyId: survey?._id,
+          userNationalCode: userInfo?.nationalCode,
+          userFullName: `${userInfo?.firstName} ${userInfo?.lastName}`,
+          userServiceLocation: userInfo?.serviceLocation,
           answers,
         }),
       });

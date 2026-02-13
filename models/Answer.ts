@@ -31,7 +31,7 @@ const answerSchema = new mongoose.Schema(
   }
 );
 
-// Ensure one answer per user per survey
-// answerSchema.index({ surveyId: 1, userNationalCode: 1 }, { unique: true });
+// Ensure one answer per user per surveyز
+answerSchema.index({ surveyId: 1, userNationalCode: 1 }, { unique: true });
 
 export default mongoose.models.Answer || mongoose.model("Answer", answerSchema);

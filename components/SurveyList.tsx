@@ -48,8 +48,8 @@ export default function SurvayList() {
       .then((surveys) => {
         const filteredData = surveys.filter((survey: any) => survey.isActive);
         setData(filteredData);
-        console.log("surveys:", surveys);
-        console.log("filteredData:", filteredData);
+        // console.log("surveys:", surveys);
+        // console.log("filteredData:", filteredData);
         setLoading(false);
       })
       .catch(() => setLoading(false));
