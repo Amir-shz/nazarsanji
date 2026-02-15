@@ -15,7 +15,7 @@ export async function GET() {
   } catch (error: any) {
     return NextResponse.json(
       { error: error.message || "خطای سرور" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -41,14 +41,15 @@ export async function POST(request: NextRequest) {
       description: description || "",
       endDate,
       questions: questions || [],
-      isActive: true,
+      // isActive: true,
     });
 
     return NextResponse.json(survey, { status: 201 });
   } catch (error: any) {
+    console.log(error);
     return NextResponse.json(
       { error: error.message || "خطای سرور" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

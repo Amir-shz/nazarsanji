@@ -32,7 +32,7 @@ export default function AdminLoginForm() {
   return (
     <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md border border-gray-200">
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
-        ورود ادمین
+        ورود مدیر
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">

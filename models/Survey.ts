@@ -8,7 +8,7 @@ const questionSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["text", "single", "multi", "multi_with_text"],
+      enum: ["text", "single", "multi", "multi_with_text", "single_with_text"],
       required: true,
     },
     options: {
@@ -22,7 +22,7 @@ const questionSchema = new mongoose.Schema(
   },
   {
     _id: true,
-  }
+  },
 );
 
 const surveySchema = new mongoose.Schema(
@@ -46,7 +46,7 @@ const surveySchema = new mongoose.Schema(
     timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  }
+  },
 );
 
 // Virtual property for checking active status
@@ -70,7 +70,19 @@ surveySchema.post("save", async function () {
         question.options = ["گزینه 1", "گزینه 2"];
       }
       question.options = question.options.filter(
-        (opt) => opt && opt.trim() !== ""
+        (opt) => opt && opt.trim() !== "",
+      );
+    }
+
+    if (question.type === "single_with_text") {
+      if (!question.descriptiveQuestion) {
+        question.descriptiveQuestion = "لطفا توضیح دهید:";
+      }
+      if (!question.options || question.options.length === 0) {
+        question.options = ["گزینه 1", "گزینه 2"];
+      }
+      question.options = question.options.filter(
+        (opt) => opt && opt.trim() !== "",
       );
     }
   }

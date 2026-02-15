@@ -21,7 +21,7 @@ import { toPersianDate } from "@/lib/utils";
 interface Question {
   _id?: string;
   question: string;
-  type: "text" | "single" | "multi" | "multi_with_text";
+  type: "text" | "single" | "multi" | "multi_with_text" | "single_with_text";
   options: string[];
   descriptiveQuestion?: string; // سوال تشریحی اضافه
 }
@@ -78,7 +78,7 @@ export default function SurveyBuilder({
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -90,7 +90,7 @@ export default function SurveyBuilder({
     // اگر نوع سوال تغییر کرد
     if (field === "type") {
       // اگر به multi_with_text تغییر کرد، مقدار پیش‌فرض برای descriptiveQuestion تنظیم کن
-      if (value === "multi_with_text") {
+      if (value === "multi_with_text" || value === "single_with_text") {
         newQuestions[index].descriptiveQuestion =
           newQuestions[index].descriptiveQuestion || "";
       }
@@ -98,6 +98,13 @@ export default function SurveyBuilder({
       if (
         newQuestions[index].type === "multi_with_text" &&
         value !== "multi_with_text"
+      ) {
+        delete newQuestions[index].descriptiveQuestion;
+      }
+
+      if (
+        newQuestions[index].type === "single_with_text" &&
+        value !== "single_with_text"
       ) {
         delete newQuestions[index].descriptiveQuestion;
       }
@@ -110,7 +117,7 @@ export default function SurveyBuilder({
   const handleOptionChange = (
     qIndex: number,
     oIndex: number,
-    value: string
+    value: string,
   ) => {
     const newQuestions = [...questions];
     newQuestions[qIndex].options[oIndex] = value;
@@ -166,7 +173,8 @@ export default function SurveyBuilder({
       if (
         q.type === "single" ||
         q.type === "multi" ||
-        q.type === "multi_with_text"
+        q.type === "multi_with_text" ||
+        q.type === "single_with_text"
       ) {
         if (q.options.length === 0 || q.options.some((opt) => !opt.trim())) {
           setError("تمام گزینه‌ها باید مقدار داشته باشند");
@@ -176,6 +184,11 @@ export default function SurveyBuilder({
 
       // اعتبارسنجی سوال تشریحی برای multi_with_text
       if (q.type === "multi_with_text" && !q.descriptiveQuestion) {
+        setError("متن سوال تشریحی برای نوع multi_with_text الزامی است");
+        return;
+      }
+
+      if (q.type === "single_with_text" && !q.descriptiveQuestion) {
         setError("متن سوال تشریحی برای نوع multi_with_text الزامی است");
         return;
       }
@@ -333,7 +346,8 @@ export default function SurveyBuilder({
             {/* Options */}
             {(question.type === "single" ||
               question.type === "multi" ||
-              question.type === "multi_with_text") && (
+              question.type === "multi_with_text" ||
+              question.type === "single_with_text") && (
               <div className="space-y-3">
                 <label className="block text-sm font-medium">گزینه‌ها</label>
                 {question.options.map((option, oIndex) => (
@@ -372,7 +386,8 @@ export default function SurveyBuilder({
             )}
 
             {/* Descriptive Question for multi_with_text */}
-            {question.type === "multi_with_text" && (
+            {(question.type === "multi_with_text" ||
+              question.type === "single_with_text") && (
               <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-sm font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">
@@ -389,7 +404,7 @@ export default function SurveyBuilder({
                       handleQuestionChange(
                         qIndex,
                         "descriptiveQuestion",
-                        e.target.value
+                        e.target.value,
                       )
                     }
                     placeholder="متن سوال تشریحی را وارد کنید..."

@@ -9,24 +9,12 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
-    const {
-      surveyId,
-      answers,
-      userNationalCode,
-      userFullName,
-      userServiceLocation,
-    } = body;
+    const { surveyId, answers, userNationalCode } = body;
 
-    if (
-      !surveyId ||
-      !answers ||
-      !userNationalCode ||
-      !userFullName ||
-      !userServiceLocation
-    ) {
+    if (!surveyId || !answers || !userNationalCode) {
       return NextResponse.json(
         { error: "داده‌های الزامی وجود ندارند" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -46,7 +34,7 @@ export async function POST(request: NextRequest) {
     if (now > endOfDay) {
       return NextResponse.json(
         { error: "مهلت پاسخ دهی به نظرسنجی پایان یافته است" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -59,7 +47,7 @@ export async function POST(request: NextRequest) {
     if (existingAnswer) {
       return NextResponse.json(
         { error: "شما قبلاً به این نظرسنجی پاسخ داده‌اید" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -69,22 +57,22 @@ export async function POST(request: NextRequest) {
       answer,
     }));
 
+    // console.log(answers);
+
     const newAnswer = await Answer.create({
       surveyId,
       userNationalCode,
-      userFullName,
-      userServiceLocation,
       answers: formattedAnswers,
     });
 
     return NextResponse.json(
       { success: true, answerId: newAnswer._id },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error: any) {
     return NextResponse.json(
       { error: error.message || "خطای سرور" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

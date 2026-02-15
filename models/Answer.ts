@@ -11,14 +11,14 @@ const answerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    userFullName: {
-      type: String,
-      required: true,
-    },
-    userServiceLocation: {
-      type: String,
-      required: true,
-    },
+    // userFullName: {
+    //   type: String,
+    //   required: true,
+    // },
+    // userServiceLocation: {
+    //   type: String,
+    //   required: true,
+    // },
     answers: [
       {
         questionId: mongoose.Schema.Types.ObjectId,
@@ -28,7 +28,7 @@ const answerSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // Ensure one answer per user per surveyز

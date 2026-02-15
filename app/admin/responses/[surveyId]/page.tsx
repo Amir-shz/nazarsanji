@@ -54,7 +54,7 @@ export default function ResponsesPage({
   const [responses, setResponses] = useState<Response[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedResponse, setSelectedResponse] = useState<Response | null>(
-    null
+    null,
   );
 
   useEffect(() => {
@@ -113,13 +113,13 @@ export default function ResponsesPage({
               <table className="w-full">
                 <thead className="bg-gray-100 border-b-2 border-gray-300">
                   <tr>
-                    <th className="px-6 py-3 text-right font-semibold">نام</th>
+                    {/* <th className="px-6 py-3 text-right font-semibold">نام</th> */}
                     <th className="px-6 py-3 text-right font-semibold">
                       کد ملی
                     </th>
-                    <th className="px-6 py-3 text-right font-semibold">
+                    {/* <th className="px-6 py-3 text-right font-semibold">
                       محل خدمت
-                    </th>
+                    </th> */}
                     <th className="px-6 py-3 text-right font-semibold">
                       تاریخ
                     </th>
@@ -134,16 +134,16 @@ export default function ResponsesPage({
                       key={response._id}
                       className="border-b border-gray-200 hover:bg-gray-50"
                     >
-                      <td className="px-6 py-4">{response?.userFullName}</td>
+                      {/* <td className="px-6 py-4">{response?.userFullName}</td> */}
                       <td className="px-6 py-4">
                         {response?.userNationalCode}
                       </td>
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         {response?.userServiceLocation}
-                      </td>
+                      </td> */}
                       <td className="px-6 py-4">
                         {new Date(response.createdAt).toLocaleDateString(
-                          "fa-IR"
+                          "fa-IR",
                         )}
                       </td>
                       <td className="px-6 py-4">
@@ -176,7 +176,7 @@ export default function ResponsesPage({
                                           survey?.questions?.find(
                                             (q) =>
                                               q._id.toString() ===
-                                              answer.questionId
+                                              answer.questionId,
                                           );
                                         // console.log(questionData);
                                         const value = answer.answer;
@@ -212,7 +212,7 @@ export default function ResponsesPage({
                                               !Array.isArray(value) && (
                                                 <div className="space-y-2">
                                                   {Array.isArray(
-                                                    value.selected
+                                                    value.selected,
                                                   ) &&
                                                     value.selected.length >
                                                       0 && (
@@ -239,7 +239,7 @@ export default function ResponsesPage({
                                             )}
                                           </div>
                                         );
-                                      }
+                                      },
                                     )}
                                   </div>
                                 </div>

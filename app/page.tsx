@@ -34,15 +34,14 @@ export default function Home() {
           <div className="flex-1 max-w-lg">
             {!showAdminLogin ? (
               <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200 text-center">
-                <h2 className="text-2xl font-bold mb-4 text-gray-800">ادمین</h2>
-                <p className="text-gray-600 mb-6">
-                  اگر ادمین هستید، به پنل مدیریت وارد شوید
-                </p>
+                <h2 className="text-2xl font-bold mb-4 text-gray-800">
+                  پنل مدیریت
+                </h2>
                 <Button
                   onClick={() => setShowAdminLogin(true)}
                   className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold"
                 >
-                  ورود به پنل ادمین
+                  ورود به پنل مدیر
                 </Button>
               </div>
             ) : (

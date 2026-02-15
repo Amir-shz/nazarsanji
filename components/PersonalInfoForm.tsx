@@ -14,10 +14,10 @@ import {
 import { SERVICE_LOCATIONS } from "@/lib/config";
 
 export default function PersonalInfoForm() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
   const [nationalCode, setNationalCode] = useState("");
-  const [serviceLocation, setServiceLocation] = useState("");
+  // const [serviceLocation, setServiceLocation] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -27,10 +27,7 @@ export default function PersonalInfoForm() {
     e.preventDefault();
     setLoading(true);
 
-    localStorage.setItem(
-      "userInfo",
-      JSON.stringify({ firstName, lastName, nationalCode, serviceLocation })
-    );
+    localStorage.setItem("userInfo", JSON.stringify({ nationalCode }));
 
     router.push("/surveys");
     setLoading(false);
@@ -43,7 +40,7 @@ export default function PersonalInfoForm() {
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
+        {/* <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             نام
           </label>
@@ -56,8 +53,8 @@ export default function PersonalInfoForm() {
             required
             className="text-right"
           />
-        </div>
-
+        </div> */}
+        {/* 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             نام خانوادگی
@@ -71,7 +68,7 @@ export default function PersonalInfoForm() {
             required
             className="text-right"
           />
-        </div>
+        </div> */}
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -91,7 +88,7 @@ export default function PersonalInfoForm() {
           />
         </div>
 
-        <div>
+        {/* <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             محل خدمت
           </label>
@@ -113,17 +110,11 @@ export default function PersonalInfoForm() {
               ))}
             </SelectContent>
           </Select>
-        </div>
+        </div> */}
 
         <Button
           type="submit"
-          disabled={
-            loading ||
-            !serviceLocation ||
-            !firstName ||
-            !lastName ||
-            !nationalCode
-          }
+          disabled={loading || !nationalCode}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold"
         >
           {loading ? "درحال ثبت..." : "تایید و ادامه"}

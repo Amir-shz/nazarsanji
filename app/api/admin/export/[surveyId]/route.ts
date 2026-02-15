@@ -5,9 +5,13 @@ import Survey from "@/models/Survey";
 import * as XLSX from "xlsx-js-style";
 import { verifySession } from "@/lib/session";
 
+function generateRandom5Digit(): number {
+  return Math.floor(Math.random() * 90000) + 10000;
+}
+
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ surveyId: string }> }
+  { params }: { params: Promise<{ surveyId: string }> },
 ) {
   const auth = await verifySession();
   if (!auth.isAuth) {
@@ -27,41 +31,75 @@ export async function GET(
 
     const data = responses.map((response: any) => {
       const row: any = {
-        "نام و نام خانوادگی": response?.userFullName || "-",
         "کد ملی": response?.userNationalCode || "-",
-        "محل خدمت": response?.userServiceLocation || "-",
         "تاریخ پاسخ": new Date(response.createdAt).toLocaleDateString("fa-IR"),
       };
 
-      survey.questions.forEach((question: any) => {
+      for (const question of survey.questions) {
         const answerObj = response.answers.find(
-          (a: any) => a.questionId?.toString() === question._id.toString()
+          (a: any) => a.questionId?.toString() === question._id.toString(),
         );
-
-        let answerValue = "-";
 
         if (answerObj) {
           const value = answerObj.answer;
 
-          if (typeof value === "string") {
-            answerValue = value;
-          } else if (Array.isArray(value)) {
-            answerValue = value.join("، ");
-          } else if (typeof value === "object" && value !== null) {
-            const selectedPart = Array.isArray(value.selected)
-              ? value.selected.join("، ")
-              : "";
+          if (question.type === "text") {
+            row[question.question] = value;
+          }
+          if (question.type === "single") {
+            row[question.question] = value;
 
-            const textPart = value.text
-              ? ` | ${question?.descriptiveQuestion}: ${value.text}`
-              : "";
+            question.options.map((option) => {
+              if (value === option) {
+                row[`${option} (${generateRandom5Digit()})`] = 1;
+              } else {
+                row[`${option} (${generateRandom5Digit()})`] = 0;
+              }
+            });
+          }
+          if (question.type === "multi") {
+            row[question.question] = value.join("، ");
 
-            answerValue = `${selectedPart}${textPart}` || "-";
+            question.options.map((option) => {
+              if (value.includes(option)) {
+                row[`${option} (${generateRandom5Digit()})`] = 1;
+              } else {
+                row[`${option} (${generateRandom5Digit()})`] = 0;
+              }
+            });
+          }
+          if (question.type === "multi_with_text") {
+            row[question.question] = value.selected.join("، ");
+
+            question.options.map((option) => {
+              if (value.selected.includes(option)) {
+                row[`${option} (${generateRandom5Digit()})`] = 1;
+              } else {
+                row[`${option} (${generateRandom5Digit()})`] = 0;
+              }
+            });
+
+            const textPart = value.text ? value.text : "";
+            row[`${question.descriptiveQuestion} (${generateRandom5Digit()})`] =
+              textPart;
+          }
+          if (question.type === "single_with_text") {
+            row[question.question] = value.selected.join(" ");
+
+            question.options.map((option) => {
+              if (value.selected.includes(option)) {
+                row[`${option} (${generateRandom5Digit()})`] = 1;
+              } else {
+                row[`${option} (${generateRandom5Digit()})`] = 0;
+              }
+            });
+
+            const textPart = value.text ? value.text : "";
+            row[`${question.descriptiveQuestion} (${generateRandom5Digit()})`] =
+              textPart;
           }
         }
-
-        row[question.question] = answerValue;
-      });
+      }
 
       return row;
     });
@@ -114,7 +152,7 @@ export async function GET(
     const colWidths = Object.keys(data[0] || {}).map((key) => {
       const maxLength = Math.max(
         key.length,
-        ...data.map((row: any) => (row[key] ? row[key].toString().length : 0))
+        ...data.map((row: any) => (row[key] ? row[key].toString().length : 0)),
       );
 
       return { wch: maxLength + 4 };
@@ -142,7 +180,7 @@ export async function GET(
     console.error(error);
     return NextResponse.json(
       { error: error.message || "خطای سرور" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

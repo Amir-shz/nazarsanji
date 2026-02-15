@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import SurveyList from "@/components/SurveyList";
+import { digitsEnToFa } from "@persian-tools/persian-tools";
 
 export default function SurveysPage() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function SurveysPage() {
             <h1 className="text-3xl font-bold text-gray-800">نظرسنجی‌ها</h1>
             {userInfo && (
               <p className="text-gray-600 mt-2">
-                خوش آمدید، {userInfo.firstName} {userInfo.lastName}
+                خوش آمدید , {digitsEnToFa(userInfo.nationalCode)}
               </p>
             )}
           </div>

@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createSession, deleteSession } from "./session";
+import Answer from "@/models/Answer";
 
 export async function adminLogin(username: string, password: string) {
   if (
@@ -18,4 +19,17 @@ export async function adminLogin(username: string, password: string) {
 export async function adminLogout() {
   await deleteSession();
   redirect("/");
+}
+
+export async function hasAnswer(surveyId: string, userNationalCode: string) {
+  const existingAnswer = await Answer.findOne({
+    surveyId,
+    userNationalCode,
+  });
+
+  if (existingAnswer) {
+    return false;
+  }
+
+  return true;
 }
