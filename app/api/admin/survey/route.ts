@@ -31,17 +31,11 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { name, description, endDate, questions } = body;
 
-    console.log(name);
-    console.log(description);
-    console.log(endDate);
-    console.log(questions);
-
     const survey = await Survey.create({
       name,
       description: description || "",
       endDate,
       questions: questions || [],
-      // isActive: true,
     });
 
     return NextResponse.json(survey, { status: 201 });

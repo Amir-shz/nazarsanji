@@ -4,20 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { SERVICE_LOCATIONS } from "@/lib/config";
 
 export default function PersonalInfoForm() {
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
   const [nationalCode, setNationalCode] = useState("");
-  // const [serviceLocation, setServiceLocation] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -40,36 +29,6 @@ export default function PersonalInfoForm() {
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            نام
-          </label>
-          <Input
-            type="text"
-            name="firstName"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            placeholder="نام خود را وارد کنید"
-            required
-            className="text-right"
-          />
-        </div> */}
-        {/* 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            نام خانوادگی
-          </label>
-          <Input
-            type="text"
-            name="lastName"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            placeholder="نام خانوادگی خود را وارد کنید"
-            required
-            className="text-right"
-          />
-        </div> */}
-
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             کد ملی
@@ -87,30 +46,6 @@ export default function PersonalInfoForm() {
             title="کد ملی باید ۱۰ رقمی باشد"
           />
         </div>
-
-        {/* <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            محل خدمت
-          </label>
-          <Select
-            name="serviceLocation"
-            value={serviceLocation}
-            onValueChange={setServiceLocation}
-            required
-            dir="rtl"
-          >
-            <SelectTrigger className="w-full min-w-80 text-right">
-              <SelectValue placeholder="یک مورد انتخاب کنید" />
-            </SelectTrigger>
-            <SelectContent position="popper">
-              {SERVICE_LOCATIONS.map((location) => (
-                <SelectItem key={location} value={location}>
-                  {location}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div> */}
 
         <Button
           type="submit"

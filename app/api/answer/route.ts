@@ -57,8 +57,6 @@ export async function POST(request: NextRequest) {
       answer,
     }));
 
-    // console.log(answers);
-
     const newAnswer = await Answer.create({
       surveyId,
       userNationalCode,

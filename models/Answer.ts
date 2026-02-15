@@ -11,14 +11,6 @@ const answerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // userFullName: {
-    //   type: String,
-    //   required: true,
-    // },
-    // userServiceLocation: {
-    //   type: String,
-    //   required: true,
-    // },
     answers: [
       {
         questionId: mongoose.Schema.Types.ObjectId,

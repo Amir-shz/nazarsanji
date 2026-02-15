@@ -113,13 +113,9 @@ export default function ResponsesPage({
               <table className="w-full">
                 <thead className="bg-gray-100 border-b-2 border-gray-300">
                   <tr>
-                    {/* <th className="px-6 py-3 text-right font-semibold">نام</th> */}
                     <th className="px-6 py-3 text-right font-semibold">
                       کد ملی
                     </th>
-                    {/* <th className="px-6 py-3 text-right font-semibold">
-                      محل خدمت
-                    </th> */}
                     <th className="px-6 py-3 text-right font-semibold">
                       تاریخ
                     </th>
@@ -134,13 +130,9 @@ export default function ResponsesPage({
                       key={response._id}
                       className="border-b border-gray-200 hover:bg-gray-50"
                     >
-                      {/* <td className="px-6 py-4">{response?.userFullName}</td> */}
                       <td className="px-6 py-4">
                         {response?.userNationalCode}
                       </td>
-                      {/* <td className="px-6 py-4">
-                        {response?.userServiceLocation}
-                      </td> */}
                       <td className="px-6 py-4">
                         {new Date(response.createdAt).toLocaleDateString(
                           "fa-IR",
@@ -178,7 +170,7 @@ export default function ResponsesPage({
                                               q._id.toString() ===
                                               answer.questionId,
                                           );
-                                        // console.log(questionData);
+
                                         const value = answer.answer;
 
                                         return (
@@ -218,7 +210,7 @@ export default function ResponsesPage({
                                                       0 && (
                                                       <p className="font-semibold">
                                                         {value.selected.join(
-                                                          "، "
+                                                          "، ",
                                                         )}
                                                       </p>
                                                     )}
