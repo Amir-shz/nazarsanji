@@ -73,7 +73,7 @@ export default function AdminLoginForm() {
         <Button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+          className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold"
         >
           {loading ? "درحال ورود..." : "ورود"}
         </Button>

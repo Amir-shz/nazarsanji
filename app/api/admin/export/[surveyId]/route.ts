@@ -29,82 +29,156 @@ export async function GET(
 
     const responses = await Answer.find({ surveyId }).lean();
 
+    //
+
+    const headers: string[] = ["کد ملی", "تاریخ پاسخ"];
+
+    for (const question of survey.questions) {
+      headers.push(question.question);
+
+      if (question.type === "multi" || question.type === "multi_with_text") {
+        for (const option of question.options) {
+          headers.push(`${option}`);
+        }
+      }
+
+      if (
+        question.type === "multi_with_text" ||
+        question.type === "single_with_text"
+      ) {
+        headers.push(question.descriptiveQuestion);
+      }
+    }
+
     const data = responses.map((response: any) => {
-      const row: any = {
-        "کد ملی": response?.userNationalCode || "-",
-        "تاریخ پاسخ": new Date(response.createdAt).toLocaleDateString("fa-IR"),
-      };
+      const row: any = {};
+
+      // مقدار اولیه همه ستون‌ها خالی باشه
+      headers.forEach((h) => (row[h] = ""));
+
+      row["کد ملی"] = response?.userNationalCode || "-";
+      row["تاریخ پاسخ"] = new Date(response.createdAt).toLocaleDateString(
+        "fa-IR",
+      );
 
       for (const question of survey.questions) {
         const answerObj = response.answers.find(
           (a: any) => a.questionId?.toString() === question._id.toString(),
         );
 
-        if (answerObj) {
-          const value = answerObj.answer;
+        if (!answerObj) continue;
 
-          if (question.type === "text") {
-            row[question.question] = value;
+        const value = answerObj.answer;
+
+        row[question.question] =
+          typeof value === "string"
+            ? value
+            : Array.isArray(value)
+              ? value.join("، ")
+              : value?.selected?.join("، ") || "";
+
+        if (question.options) {
+          for (const option of question.options) {
+            const colName = `${option}`;
+
+            if (Array.isArray(value)) {
+              row[colName] = value.includes(option) ? 1 : 0;
+            } else if (value?.selected) {
+              row[colName] = value.selected.includes(option) ? 1 : 0;
+            }
           }
-          if (question.type === "single") {
-            row[question.question] = value;
+        }
 
-            question.options.map((option) => {
-              if (value === option) {
-                row[`${option} (${generateRandom5Digit()})`] = 1;
-              } else {
-                row[`${option} (${generateRandom5Digit()})`] = 0;
-              }
-            });
-          }
-          if (question.type === "multi") {
-            row[question.question] = value.join("، ");
-
-            question.options.map((option) => {
-              if (value.includes(option)) {
-                row[`${option} (${generateRandom5Digit()})`] = 1;
-              } else {
-                row[`${option} (${generateRandom5Digit()})`] = 0;
-              }
-            });
-          }
-          if (question.type === "multi_with_text") {
-            row[question.question] = value.selected.join("، ");
-
-            question.options.map((option) => {
-              if (value.selected.includes(option)) {
-                row[`${option} (${generateRandom5Digit()})`] = 1;
-              } else {
-                row[`${option} (${generateRandom5Digit()})`] = 0;
-              }
-            });
-
-            const textPart = value.text ? value.text : "";
-            row[`${question.descriptiveQuestion} (${generateRandom5Digit()})`] =
-              textPart;
-          }
-          if (question.type === "single_with_text") {
-            row[question.question] = value.selected.join(" ");
-
-            question.options.map((option) => {
-              if (value.selected.includes(option)) {
-                row[`${option} (${generateRandom5Digit()})`] = 1;
-              } else {
-                row[`${option} (${generateRandom5Digit()})`] = 0;
-              }
-            });
-
-            const textPart = value.text ? value.text : "";
-            row[`${question.descriptiveQuestion} (${generateRandom5Digit()})`] =
-              textPart;
-          }
+        if (value?.text) {
+          row[question.descriptiveQuestion] = value.text;
         }
       }
 
       return row;
     });
 
-    const worksheet = XLSX.utils.json_to_sheet(data);
+    //
+
+    // const data = responses.map((response: any) => {
+    //   const row: any = {
+    //     "کد ملی": response?.userNationalCode || "-",
+    //     "تاریخ پاسخ": new Date(response.createdAt).toLocaleDateString("fa-IR"),
+    //   };
+
+    //   for (const question of survey.questions) {
+    //     const answerObj = response.answers.find(
+    //       (a: any) => a.questionId?.toString() === question._id.toString(),
+    //     );
+
+    //     if (answerObj) {
+    //       const value = answerObj.answer;
+
+    //       if (question.type === "text") {
+    //         row[question.question] = value;
+    //       }
+    //       if (question.type === "single") {
+    //         row[question.question] = value;
+
+    //         // question.options.map((option) => {
+    //         //   if (value === option) {
+    //         //     row[`${option} (${generateRandom5Digit()})`] = 1;
+    //         //   } else {
+    //         //     row[`${option} (${generateRandom5Digit()})`] = 0;
+    //         //   }
+    //         // });
+    //       }
+    //       if (question.type === "multi") {
+    //         row[question.question] = value.join("، ");
+
+    //         question.options.map((option: any) => {
+    //           if (value.includes(option)) {
+    //             row[`${option} (${generateRandom5Digit()})`] = 1;
+    //           } else {
+    //             row[`${option} (${generateRandom5Digit()})`] = 0;
+    //           }
+    //         });
+    //       }
+    //       if (question.type === "multi_with_text") {
+    //         row[question.question] = value.selected.join("، ");
+
+    //         question.options.map((option: any) => {
+    //           if (value.selected.includes(option)) {
+    //             row[`${option} (${generateRandom5Digit()})`] = 1;
+    //           } else {
+    //             row[`${option} (${generateRandom5Digit()})`] = 0;
+    //           }
+    //         });
+
+    //         const textPart = value.text ? value.text : "";
+    //         row[`${question.descriptiveQuestion} (${generateRandom5Digit()})`] =
+    //           textPart;
+    //       }
+    //       if (question.type === "single_with_text") {
+    //         row[question.question] = value.selected.at(0);
+
+    //         // question.options.map((option) => {
+    //         //   if (value.selected.includes(option)) {
+    //         //     row[`${option} (${generateRandom5Digit()})`] = 1;
+    //         //   } else {
+    //         //     row[`${option} (${generateRandom5Digit()})`] = 0;
+    //         //   }
+    //         // });
+
+    //         const textPart = value.text ? value.text : "";
+    //         row[`${question.descriptiveQuestion} (${generateRandom5Digit()})`] =
+    //           textPart;
+    //       }
+    //     }
+    //   }
+
+    //   return row;
+    // });
+
+    // const worksheet = XLSX.utils.json_to_sheet(data);
+
+    const worksheet = XLSX.utils.json_to_sheet(data, {
+      header: headers,
+    });
 
     // راست‌چین کامل شیت
     worksheet["!sheetViews"] = [

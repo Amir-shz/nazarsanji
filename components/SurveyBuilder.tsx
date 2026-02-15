@@ -290,7 +290,7 @@ export default function SurveyBuilder({
         {questions.map((question, qIndex) => (
           <div
             key={qIndex}
-            className="bg-white p-6 rounded-lg shadow-md space-y-4 border-r-4 border-blue-500"
+            className="bg-white p-6 rounded-lg shadow-md space-y-4 border-r-4 border-green-500"
           >
             <div className="flex justify-between items-center">
               <h3 className="font-semibold">سؤال {digitsEnToFa(qIndex + 1)}</h3>
@@ -390,7 +390,7 @@ export default function SurveyBuilder({
               question.type === "single_with_text") && (
               <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-sm font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">
+                  <span className="text-sm font-medium text-green-600 bg-green-50 px-2 py-1 rounded">
                     سوال تشریحی
                   </span>
                 </div>
@@ -443,7 +443,7 @@ export default function SurveyBuilder({
         <Button
           type="submit"
           disabled={submitting}
-          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+          className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold"
         >
           {submitting ? "درحال ثبت..." : isEdit ? "ویرایش" : "ایجاد"}
         </Button>

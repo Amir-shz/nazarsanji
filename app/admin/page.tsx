@@ -79,7 +79,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen   py-12 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -95,7 +95,7 @@ export default function AdminDashboard() {
         {/* Action Buttons */}
         <div className="flex gap-4 mb-8">
           <Link href="/admin/create-survey">
-            <Button className="bg-blue-600 hover:bg-blue-700">
+            <Button className="bg-green-600 hover:bg-green-700">
               ایجاد نظرسنجی جدید
             </Button>
           </Link>

@@ -8,5 +8,9 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <div className="bg-linear-to-br from-green-400 to-indigo-200 ">
+      {children}
+    </div>
+  );
 }

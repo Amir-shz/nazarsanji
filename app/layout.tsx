@@ -70,7 +70,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body
-        className={`bg-gray-50 text-gray-900 ${IranSans.className} ${IranSans.variable}`}
+        className={` bg-linear-to-br from-green-400 to-indigo-200  text-gray-900 ${IranSans.className} ${IranSans.variable}`}
       >
         {children}
       </body>

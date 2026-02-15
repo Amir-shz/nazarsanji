@@ -25,7 +25,7 @@ export default function SurveysPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-linear-to-br from-green-400 to-indigo-200  py-12 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">

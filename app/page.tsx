@@ -4,42 +4,49 @@ import { useState } from "react";
 import PersonalInfoForm from "@/components/PersonalInfoForm";
 import AdminLoginForm from "@/components/AdminLoginForm";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function Home() {
   const [showAdminLogin, setShowAdminLogin] = useState(false);
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 py-12 px-4">
+    <div className="min-h-screen bg-linear-to-br from-green-400 to-indigo-200 py-6 px-2">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            سیستم نظرسنجی
-          </h1>
-          <p className="text-lg text-gray-600">
-            در نظرسنجی‌های موسسه شرکت کنید
-          </p>
+        <div className="flex justify-between items-center  mb-8">
+          <div>
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">
+              سامانه نظرسنجی
+            </h1>
+            <p className="text-lg text-gray-600">
+              نظر کارکنان، زیربنای تصمیم گیری های موثر موسسه
+            </p>
+          </div>
+
+          <div className="flex justify-center items-center mt-4">
+            <Image alt="logo" src="/Arm.png" width={100} height={100} />
+          </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 justify-center items-start">
+        <div className="grid grid-cols-6 gap-8 justify-center items-start">
           {/* Personal Info Section */}
-          <div className="flex-1 max-w-lg">
+          <div className="w-full col-span-4">
             <PersonalInfoForm />
           </div>
 
           {/* Divider */}
-          <div className="hidden lg:block w-px bg-gray-300 my-8"></div>
+          {/* <div className="hidden lg:block w-px bg-gray-300 my-8"></div> */}
 
           {/* Admin Section */}
-          <div className="flex-1 max-w-lg">
+          <div className="w-full col-span-2">
             {!showAdminLogin ? (
-              <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200 text-center">
+              <div className="  bg-white p-8 rounded-lg shadow-md border border-gray-200 text-center">
                 <h2 className="text-2xl font-bold mb-4 text-gray-800">
                   پنل مدیریت
                 </h2>
                 <Button
                   onClick={() => setShowAdminLogin(true)}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold"
                 >
                   ورود به پنل مدیر
                 </Button>

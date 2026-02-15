@@ -155,7 +155,7 @@ export default function SurveyModal({ survey }: { survey: any }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-green-600 hover:bg-green-700"
           onClick={handleOpenModal}
         >
           شرکت در نظرسنجی
@@ -163,16 +163,16 @@ export default function SurveyModal({ survey }: { survey: any }) {
       </DialogTrigger>
 
       <DialogContent
-        className="sm:max-w-lg rounded-xl p-6 bg-white shadow-xl text-right [&>button]:hidden max-h-[90dvh] overflow-y-scroll"
+        className="sm:max-w-lg rounded-xl p-6 bg-linear-to-br from-green-300 to-indigo-100  shadow-xl text-right [&>button]:hidden max-h-dvh min-w-dvw overflow-y-scroll"
         onPointerDownOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
         {/* حذف ضربدر */}
         <DialogHeader>
-          <DialogTitle className="text-lg font-bold text-blue-700 text-right">
+          <DialogTitle className="text-lg font-bold text-green-800 text-right">
             نظرسنجی
           </DialogTitle>
-          <DialogDescription className="text-sm text-gray-500 text-right flex flex-col gap-3 -mt-1">
+          <DialogDescription className="text-sm font-medium text-gray-600 text-right flex flex-col gap-3 -mt-1">
             <p>{survey.description}</p>
             <p>
               سوال {digitsEnToFa(currentQuestion + 1)} از{" "}
@@ -190,7 +190,7 @@ export default function SurveyModal({ survey }: { survey: any }) {
               placeholder="جواب خود را وارد کنید"
               value={answers[currentQuestion] || ""}
               onChange={(e) => handleAnswerChange(e.target.value)}
-              className="border-gray-300 focus:border-blue-500 focus:ring-blue-200 rounded-md"
+              className="border-gray-300 focus:border-green-500 focus:ring-green-200 rounded-md"
             />
           )}
 
@@ -205,13 +205,13 @@ export default function SurveyModal({ survey }: { survey: any }) {
               {currentQ.options.map((opt) => (
                 <div
                   key={opt}
-                  className="flex items-center gap-3 p-2 rounded-md hover:bg-blue-50 cursor-pointer"
+                  className="flex items-center gap-3 p-2 rounded-md hover:bg-green-400 cursor-pointer duration-200"
                   onClick={() => handleAnswerChange(opt)} // کلیک روی کل ردیف
                 >
                   <RadioGroupItem
                     value={opt}
                     id={opt}
-                    className="accent-blue-600 pointer-events-none"
+                    className="accent-green-600 pointer-events-none"
                   />
                   <label htmlFor={opt} className="cursor-pointer">
                     {opt}
@@ -227,7 +227,7 @@ export default function SurveyModal({ survey }: { survey: any }) {
               {currentQ.options.map((opt) => (
                 <div
                   key={opt}
-                  className="flex items-center gap-3 p-2 rounded-md hover:bg-blue-50 cursor-pointer"
+                  className="flex items-center gap-3 p-2 rounded-md hover:bg-green-400 cursor-pointer duration-200"
                   onClick={() => {
                     const currentAns = answers[currentQuestion] || [];
                     if (currentAns.includes(opt)) {
@@ -242,7 +242,7 @@ export default function SurveyModal({ survey }: { survey: any }) {
                   <Checkbox
                     checked={answers[currentQuestion]?.includes(opt) || false}
                     onCheckedChange={() => {}}
-                    className="accent-blue-600 pointer-events-none"
+                    className="accent-green-600 pointer-events-none"
                   />
                   <label className="cursor-pointer">{opt}</label>
                 </div>
@@ -257,7 +257,7 @@ export default function SurveyModal({ survey }: { survey: any }) {
                 {currentQ.options.map((opt) => (
                   <div
                     key={opt}
-                    className="flex items-center gap-3 p-2 rounded-md hover:bg-blue-50 cursor-pointer"
+                    className="flex items-center gap-3 p-2 rounded-md hover:bg-green-400 cursor-pointer duration-200"
                     onClick={() => {
                       const currentAns = answers[currentQuestion] || {
                         selected: [],
@@ -283,7 +283,7 @@ export default function SurveyModal({ survey }: { survey: any }) {
                         false
                       }
                       onCheckedChange={() => {}}
-                      className="accent-blue-600 pointer-events-none"
+                      className="accent-green-600 pointer-events-none"
                     />
                     <label className="cursor-pointer">{opt}</label>
                   </div>
@@ -300,7 +300,7 @@ export default function SurveyModal({ survey }: { survey: any }) {
                   };
                   handleAnswerChange({ ...currentAns, text: e.target.value });
                 }}
-                className="border-gray-300 focus:border-blue-500 focus:ring-blue-200 rounded-md "
+                className="border-gray-300 focus:border-green-500 focus:ring-green-200 rounded-md "
               />
             </>
           )}
@@ -336,13 +336,13 @@ export default function SurveyModal({ survey }: { survey: any }) {
                   {currentQ.options.map((opt) => (
                     <div
                       key={opt}
-                      className="flex items-center gap-3 p-2 rounded-md hover:bg-blue-50 cursor-pointer"
+                      className="flex items-center gap-3 p-2 rounded-md hover:bg-green-50 cursor-pointer"
                       onClick={() => handleAnswerChange(opt)} // کلیک روی کل ردیف
                     >
                       <RadioGroupItem
                         value={opt}
                         id={opt}
-                        className="accent-blue-600 pointer-events-none"
+                        className="accent-green-600 pointer-events-none"
                       />
                       <label htmlFor={opt} className="cursor-pointer">
                         {opt}
@@ -362,7 +362,7 @@ export default function SurveyModal({ survey }: { survey: any }) {
                   };
                   handleAnswerChange({ ...currentAns, text: e.target.value });
                 }}
-                className="border-gray-300 focus:border-blue-500 focus:ring-blue-200 rounded-md "
+                className="border-gray-300 focus:border-green-500 focus:ring-green-200 rounded-md "
               />
             </>
           )} */}
@@ -390,12 +390,12 @@ export default function SurveyModal({ survey }: { survey: any }) {
                   {currentQ.options.map((opt) => (
                     <div
                       key={opt}
-                      className="flex items-center gap-3 p-2 rounded-md hover:bg-blue-50 cursor-pointer"
+                      className="flex items-center gap-3 p-2 rounded-md hover:bg-green-50 cursor-pointer"
                     >
                       <RadioGroupItem
                         value={opt}
                         id={opt}
-                        className="accent-blue-600"
+                        className="accent-green-600"
                       />
                       <label htmlFor={opt} className="cursor-pointer">
                         {opt}
@@ -420,7 +420,7 @@ export default function SurveyModal({ survey }: { survey: any }) {
                     text: e.target.value,
                   });
                 }}
-                className="border-gray-300 focus:border-blue-500 focus:ring-blue-200 rounded-md"
+                className="border-gray-300 focus:border-green-500 focus:ring-green-200 rounded-md"
               />
             </>
           )} */}
@@ -458,13 +458,13 @@ export default function SurveyModal({ survey }: { survey: any }) {
                           selected: [opt],
                         });
                       }}
-                      className={`flex items-center gap-3 p-2 rounded-md cursor-pointer transition hover:bg-blue-50
+                      className={`flex items-center gap-3 p-2 rounded-md cursor-pointer transition hover:bg-green-400 duration-200
           `}
                     >
                       <RadioGroupItem
                         value={opt}
                         id={opt}
-                        className="accent-blue-600 pointer-events-none"
+                        className="accent-green-600 pointer-events-none"
                       />
                       <label htmlFor={opt} className="cursor-pointer w-full">
                         {opt}
@@ -489,17 +489,17 @@ export default function SurveyModal({ survey }: { survey: any }) {
                     text: e.target.value,
                   });
                 }}
-                className="border-gray-300 focus:border-blue-500 focus:ring-blue-200 rounded-md"
+                className="border-gray-300 focus:border-green-500 focus:ring-green-200 rounded-md"
               />
             </>
           )}
         </div>
 
-        <div className="mt-6 flex justify-between items-center">
+        <div className="mt-6 flex justify-center items-center gap-24">
           <Button
             variant="ghost"
             onClick={handleCancel}
-            className="text-gray-500 hover:text-red-500 cursor-pointer"
+            className="text-gray-500 hover:text-red-600 font-medium hover:bg-red-100 cursor-pointer"
           >
             انصراف
           </Button>
@@ -509,19 +509,19 @@ export default function SurveyModal({ survey }: { survey: any }) {
               <Button
                 variant="outline"
                 onClick={handlePrev}
-                className="border-blue-700 text-blue-700 hover:bg-blue-50 hover:text-blue-700 cursor-pointer"
+                className="border-green-700 text-green-700 hover:bg-green-50 hover:text-green-700 cursor-pointer"
               >
-                قبلی
+                &rarr; قبلی
               </Button>
             )}
             <Button
               onClick={handleNext}
               disabled={loading}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-green-600 hover:bg-green-700"
             >
               {currentQuestion < survey.questions.length - 1
-                ? "بعدی"
-                : "ثبت نهایی"}
+                ? "بعدی \u2190"
+                : "ثبت نهایی \u2190"}
             </Button>
           </div>
         </div>
