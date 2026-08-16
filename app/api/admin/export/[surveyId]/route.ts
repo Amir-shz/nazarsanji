@@ -33,12 +33,27 @@ export async function GET(
 
     const headers: string[] = ["کد ملی", "تاریخ پاسخ"];
 
+    // نگهداری نام ستون‌های یکتا برای هر سوال (براساس _id)
+    const questionHeaderMap: Record<
+      string,
+      { main: string; optionMap: Record<string, string>; desc?: string }
+    > = {};
+
     for (const question of survey.questions) {
-      headers.push(question.question);
+      const qId = question._id.toString();
+
+      // ستون اصلی برای متن سوال همراه با شناسهٔ سوال تا یکتا باشد
+      const mainHeader = `${question.question} (${qId})`;
+      headers.push(mainHeader);
+
+      const optionMap: Record<string, string> = {};
 
       if (question.type === "multi" || question.type === "multi_with_text") {
         for (const option of question.options) {
-          headers.push(`${option}`);
+          // هر ستون گزینه نیز شامل شناسهٔ سوال می‌شود تا بین سوال‌ها تداخل ایجاد نشود
+          const optHeader = `${option} (${qId})`;
+          headers.push(optHeader);
+          optionMap[option] = optHeader;
         }
       }
 
@@ -46,7 +61,15 @@ export async function GET(
         question.type === "multi_with_text" ||
         question.type === "single_with_text"
       ) {
-        headers.push(question.descriptiveQuestion);
+        const descHeader = `${question.descriptiveQuestion} (${qId})`;
+        headers.push(descHeader);
+        questionHeaderMap[qId] = {
+          main: mainHeader,
+          optionMap,
+          desc: descHeader,
+        };
+      } else {
+        questionHeaderMap[qId] = { main: mainHeader, optionMap };
       }
     }
 
@@ -62,24 +85,31 @@ export async function GET(
       );
 
       for (const question of survey.questions) {
+        const qId = question._id.toString();
+        const headerInfo = questionHeaderMap[qId];
+
         const answerObj = response.answers.find(
-          (a: any) => a.questionId?.toString() === question._id.toString(),
+          (a: any) => a.questionId?.toString() === qId,
         );
 
         if (!answerObj) continue;
 
         const value = answerObj.answer;
 
-        row[question.question] =
+        // ستونِ کلیِ سوال (متن خلاصهٔ پاسخ)
+        const mainHeader = headerInfo.main;
+        row[mainHeader] =
           typeof value === "string"
             ? value
             : Array.isArray(value)
               ? value.join("، ")
               : value?.selected?.join("، ") || "";
 
+        // ستون‌های مربوط به هر گزینه (با نام یکتا شامل شناسه سوال)
         if (question.options) {
           for (const option of question.options) {
-            const colName = `${option}`;
+            const colName =
+              headerInfo.optionMap[option] || `${option} (${qId})`;
 
             if (Array.isArray(value)) {
               row[colName] = value.includes(option) ? 1 : 0;
@@ -89,8 +119,9 @@ export async function GET(
           }
         }
 
-        if (value?.text) {
-          row[question.descriptiveQuestion] = value.text;
+        // ستون توضیحی در صورت وجود
+        if (value?.text && headerInfo.desc) {
+          row[headerInfo.desc] = value.text;
         }
       }
 
