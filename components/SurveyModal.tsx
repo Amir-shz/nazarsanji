@@ -163,7 +163,7 @@ export default function SurveyModal({ survey }: { survey: any }) {
       </DialogTrigger>
 
       <DialogContent
-        className="sm:max-w-lg rounded-xl p-6 bg-linear-to-br from-green-300 to-indigo-100  shadow-xl text-right [&>button]:hidden max-h-dvh min-w-dvw overflow-y-scroll"
+        className="sm:max-w-lg rounded-xl p-6 bg-linear-to-br from-green-300 to-indigo-100  shadow-xl text-right [&>button]:hidden max-h-dvh min-w-dvw overflow-y-scroll min-h-dvh"
         onPointerDownOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
